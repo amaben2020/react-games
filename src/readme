@@ -1,0 +1,56 @@
+import { useState } from "react";
+import "./App.css";
+
+function App() {
+const [currentQuestion, setCurrentQuestion] = useState(0);
+const [showResults, setShowResults] = useState(false);
+const [score, setScore] = useState(0);
+
+const handleCorrectQuestion = (isCorrect, question) => {
+console.log(question);
+if (isCorrect) {
+setScore((p) => p + 1);
+}
+console.log(questions.length);
+console.log(currentQuestion + 1);
+
+    if (currentQuestion + 1 === questions.length) {
+      setShowResults(true);
+    }
+
+    if (currentQuestion + 1 < questions.length) {
+      setCurrentQuestion(currentQuestion + 1);
+    }
+
+};
+
+return (
+<>
+<div>
+Score: {score}
+current : {currentQuestion + 1}
+total : {questions.length}
+{showResults ? <p>No Questions</p> : questions[currentQuestion].text}
+{showResults ? (
+<p>THE END</p>
+) : (
+<ul>
+{questions[currentQuestion].options.map((question) => (
+<li
+key={question.id}
+className="option"
+onClick={() =>
+handleCorrectQuestion(question.isCorrect, question)
+} >
+{" "}
+{question.text}
+</li>
+))}
+</ul>
+)}
+</div>
+</>
+);
+}
+
+export default App;
