@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { questions } from "./data/data";
 
 // display the questions
@@ -10,7 +10,13 @@ import { questions } from "./data/data";
 // give time constraint with timer i.e 2mins per question
 
 const App = () => {
-  return <div></div>;
+  return (
+    <div>
+      {questions.map((question) => (
+        <>{question.text}</>
+      ))}
+    </div>
+  );
 };
 
 export default App;
