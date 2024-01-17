@@ -4,8 +4,8 @@ import Modal from "./components/Modal/Modal";
 import useTimer from "./hooks/useTimer";
 const ConstraintQuizGame = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
-  console.log(selectedAnswer);
   const [currentQuestion, setCurrentQuestion] = useState(0);
+  const isLastPage = currentQuestion === questions.length;
 
   const [score, setScore] = useState(0);
 
@@ -14,11 +14,8 @@ const ConstraintQuizGame = () => {
   const sessionAttempts = sessionStorage.getItem("attempts");
 
   const { hours, minutes, seconds, timerExpired } = useTimer(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleModalClose = () => {
-    setIsModalOpen((p) => !p);
-  };
+  const isLast = isLastPage || timerExpired;
 
   const handleNextQuestion = (isCorrect, id) => {
     const correctOption = questions[currentQuestion].options.find(
@@ -31,22 +28,22 @@ const ConstraintQuizGame = () => {
     if (isCorrect) {
       setSelectedAnswer(correctOption);
       setTimeout(() => {
-        setCurrentQuestion((p) => p + 1);
+        if (!isLast) {
+          setCurrentQuestion((p) => p + 1);
+        }
         setSelectedAnswer(null);
-      }, 2000);
+      }, 200);
       setScore(score + 1);
     } else {
       setTimeout(() => {
         setCurrentQuestion((p) => p + 1);
         setSelectedAnswer(null);
-      }, 1500);
+      }, 500);
       setAttempts((p) => (p === 0 ? 0 : p - 1));
       setSelectedAnswer(inCorrectOption);
       // move to useEffect
       sessionStorage.setItem("attempts", attempts === 1 ? 1 : attempts - 1);
     }
-
-    console.log(isCorrect);
   };
 
   return (
@@ -55,8 +52,11 @@ const ConstraintQuizGame = () => {
         background: timerExpired ? "red" : "",
       }}
     >
+      <p>
+        Current : {currentQuestion}/{questions.length}
+      </p>
       <h1>Score: {score}</h1>
-      {timerExpired && <Modal handleModalClose={handleModalClose} />}
+      {isLast && <Modal />}
       <h1>Number of attempts {sessionAttempts}</h1> {hours}:{minutes}:{seconds}
       <h2> {questions[currentQuestion]?.text} </h2>
       <div
