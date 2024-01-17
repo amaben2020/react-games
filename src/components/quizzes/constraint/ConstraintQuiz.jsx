@@ -1,11 +1,3 @@
-// display the questions ✅
-// select one option ✅
-// display green border for correct and red for wrong ✅
-// move to next question ✅
-// ensure each question has 3 attempts ✅
-// move to finish page with score when attempts are completed ✅
-// give time constraint with timer i.e 2mins per question ✅
-
 import { useState } from "react";
 import { questions } from "../../../data/data";
 import Modal from "./components/Modal/Modal";
@@ -21,16 +13,19 @@ const ConstraintQuizGame = () => {
   const sessionAttempts = sessionStorage.getItem("attempts");
 
   const { hours, minutes, seconds, timerExpired } = useTimer(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleModalClose = () => {
+    setIsModalOpen((p) => !p);
+  };
 
   const handleNextQuestion = (isCorrect) => {
-    console.log(isCorrect);
-
     if (isCorrect) {
       const correctOption = questions[currentQuestion].options.find(
         (item) => item.isCorrect,
       );
-      // setCurrentQuestion((p) => p + 1);
-      // setScore(score + 1);
+      setCurrentQuestion((p) => p + 1);
+      setScore(score + 1);
       setSelectedAnswer(correctOption);
     }
 
@@ -44,9 +39,9 @@ const ConstraintQuizGame = () => {
         background: timerExpired ? "red" : "",
       }}
     >
-      {timerExpired ? "ska" : "no"}
-      {timerExpired && <Modal />}
-      <Modal />
+      {(timerExpired || isModalOpen) && (
+        <Modal handleModalClose={handleModalClose} />
+      )}
       <h1>Number of attempts {sessionAttempts}</h1> {hours}:{minutes}:{seconds}
       <h2> {questions[currentQuestion].text} </h2>
       <div

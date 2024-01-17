@@ -1,12 +1,15 @@
 import React from "react";
 import "./style.css";
-const Modal = () => {
+// eslint-disable-next-line react/prop-types
+const Modal = ({ handleModalClose }) => {
   return (
     <>
       <div className="modal-overlay" />
       <div className="modal">
         <div className="modal-body">
-          <button>Close Modal</button>
+          <button className="modal-button" onClick={handleModalClose}>
+            Close Modal
+          </button>
         </div>
       </div>
     </>
