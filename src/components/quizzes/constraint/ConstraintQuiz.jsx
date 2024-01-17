@@ -8,8 +8,8 @@
 
 import { useState } from "react";
 import { questions } from "../../../data/data";
+import Modal from "./components/Modal/Modal";
 import useTimer from "./hooks/useTimer";
-
 const ConstraintQuizGame = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -45,6 +45,8 @@ const ConstraintQuizGame = () => {
       }}
     >
       {timerExpired ? "ska" : "no"}
+      {timerExpired && <Modal />}
+      <Modal />
       <h1>Number of attempts {sessionAttempts}</h1> {hours}:{minutes}:{seconds}
       <h2> {questions[currentQuestion].text} </h2>
       <div
