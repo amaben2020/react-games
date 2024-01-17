@@ -2,6 +2,7 @@ import React from "react";
 import "./style.css";
 // eslint-disable-next-line react/prop-types
 const Modal = ({ handleModalClose }) => {
+  console.log(handleModalClose);
   return (
     <>
       <div className="modal-overlay" />
