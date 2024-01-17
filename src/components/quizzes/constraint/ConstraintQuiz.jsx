@@ -16,10 +16,6 @@ const ConstraintQuizGame = () => {
 
   const [score, setScore] = useState(3);
 
-  // useEffect(() => {
-  //   sessionStorage.setItem("score", 3);
-  // }, [score]);
-
   const [attempts, setAttempts] = useState(3);
 
   const sessionAttempts = sessionStorage.getItem("attempts");
@@ -41,6 +37,7 @@ const ConstraintQuizGame = () => {
     setAttempts((p) => (p === 0 ? 0 : p - 1));
     sessionStorage.setItem("attempts", attempts - 1);
   };
+
   return (
     <div
       style={{
