@@ -33,13 +33,13 @@ const ConstraintQuizGame = () => {
       setTimeout(() => {
         setCurrentQuestion((p) => p + 1);
         setSelectedAnswer(null);
-      }, 200000);
+      }, 2000);
       setScore(score + 1);
     } else {
       setTimeout(() => {
         setCurrentQuestion((p) => p + 1);
         setSelectedAnswer(null);
-      }, 2000);
+      }, 1500);
       setAttempts((p) => (p === 0 ? 0 : p - 1));
       setSelectedAnswer(inCorrectOption);
       // move to useEffect
@@ -48,10 +48,7 @@ const ConstraintQuizGame = () => {
 
     console.log(isCorrect);
   };
-  console.log(selectedAnswer);
-  console.log(
-    selectedAnswer?.isCorrect ? "green" : selectedAnswer === null ? "" : "red",
-  );
+
   return (
     <div
       style={{
@@ -59,8 +56,7 @@ const ConstraintQuizGame = () => {
       }}
     >
       <h1>Score: {score}</h1>
-      {timerExpired ||
-        (isModalOpen && <Modal handleModalClose={handleModalClose} />)}
+      {timerExpired && <Modal handleModalClose={handleModalClose} />}
       <h1>Number of attempts {sessionAttempts}</h1> {hours}:{minutes}:{seconds}
       <h2> {questions[currentQuestion]?.text} </h2>
       <div
@@ -71,19 +67,6 @@ const ConstraintQuizGame = () => {
         }}
       >
         {questions[currentQuestion]?.options.map((option) => {
-          let correctOpt = false;
-          if (option.isCorrect) {
-            console.log(option);
-            correctOpt = option;
-          }
-
-          console.log(selectedAnswer);
-          console.log(option);
-          console.log(correctOpt);
-
-          // if (selectedAnswer) {
-          // }
-
           return (
             <button
               onClick={() => handleNextQuestion(option.isCorrect, option.id)}
